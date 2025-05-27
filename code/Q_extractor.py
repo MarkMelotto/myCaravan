@@ -3,7 +3,7 @@ import os
 import numpy as np
 
 def extract_Q(folder):
-    directory = os.path.join("c:\\", "/Users/markmelotto/PycharmProjects/Caravan")
+    directory = os.path.join("c:\\", "/Users/markmelotto/PycharmProjects/myCaravan")
     directory = os.path.join(directory, folder)
     df_2 = pd.read_csv(directory + "/df_metadata.csv")
     # print(df_2)
@@ -55,7 +55,7 @@ def extract_Q(folder):
 if __name__ == "__main__":
     '''NOTE; first csv file should contain data, I think I fixed that problem though'''
     # print(df_loaded)
-    df_loaded = extract_Q("camels_kenya")
+    df_loaded = extract_Q("zoe")
     # df_loaded.to_csv(directory + "/df_loaded.csv", index=True)
     #
     # df_2 = pd.read_csv(directory + "/df_loaded.csv", index_col=0)

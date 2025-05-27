@@ -2,7 +2,7 @@ import pandas as pd
 import os
 
 def extract_latlon_etc(folder):
-    directory = os.path.join("c:\\", "/Users/markmelotto/PycharmProjects/Caravan")
+    directory = os.path.join("c:\\", "/Users/markmelotto/PycharmProjects/myCaravan")
     directory = os.path.join(directory, folder)
     # country = 'Ghana'
     country = folder.split('_')[-1]
@@ -24,7 +24,9 @@ def extract_latlon_etc(folder):
 
                 with open(filepath, 'r') as f:
                     for line in f:
+                        # print(line)
                         line = line.strip()
+                        # print(line)
 
                         if line.startswith("# Latitude"):
                             lat = float(line.split(":")[1].strip())
@@ -35,8 +37,9 @@ def extract_latlon_etc(folder):
                         elif line.startswith("# GRDC-No."):
                             grdc_no_raw = line.split(":")[1].strip()
                             grdc_no = f"AF_{grdc_no_raw}.0"
-                        elif line.startswith("# Catchment area (km²)"):
+                        elif line.startswith("# Catchment area ("):
                             area = float(line.split(":")[1].strip())
+                            # print(area)
 
                         if line.startswith("# DATA") or line.startswith("YYYY-MM-DD"):
                             break
@@ -54,7 +57,7 @@ def extract_latlon_etc(folder):
     return df_metadata
 
 if __name__ == "__main__":
-    df_metadata = extract_latlon_etc("camels_kenya")
+    df_metadata = extract_latlon_etc("zoe")
     # Optional: show or save the DataFrame
     print(df_metadata)
     # df_metadata.to_csv(directory + "/df_metadata.csv", index=True)

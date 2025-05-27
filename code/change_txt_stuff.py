@@ -2,7 +2,7 @@ import os
 import shutil
 
 # Set your target folder path
-folder = r"c:\Users\markmelotto\PycharmProjects\Caravan\camels_zimbabwe"
+folder = r"c:\Users\markmelotto\PycharmProjects\myCaravan\zoe"
 
 for filename in os.listdir(folder):
     if filename.endswith(".Cmd.txt"):
