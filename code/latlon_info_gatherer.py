@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 
-def extract_latlon_etc(folder):
+def extract_latlon_etc(folder, prefix="zim"):
     directory = os.path.join("c:\\", "/Users/markmelotto/PycharmProjects/myCaravan")
     directory = os.path.join(directory, folder)
     # country = 'Ghana'
@@ -36,7 +36,7 @@ def extract_latlon_etc(folder):
                             station = line.split(":")[1].strip()
                         elif line.startswith("# GRDC-No."):
                             grdc_no_raw = line.split(":")[1].strip()
-                            grdc_no = f"AF_{grdc_no_raw}.0"
+                            grdc_no = f"{prefix}_{grdc_no_raw}.0"
                         elif line.startswith("# Catchment area ("):
                             area = float(line.split(":")[1].strip())
                             # print(area)
