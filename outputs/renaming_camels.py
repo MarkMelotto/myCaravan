@@ -13,7 +13,7 @@ def rename_camels_files(postfix="zim"):
         raise ValueError(f"The provided folder for '{postfix}' is not a valid directory.")
 
     # first the CSV bit
-    csv_path = directory / "csv" / "postfix"
+    csv_path = directory / "csv" / f"{postfix}"
     for root, dirs, files in os.walk(csv_path):
         for file in files:
             if file.endswith(".csv"):
@@ -25,7 +25,7 @@ def rename_camels_files(postfix="zim"):
     # Done with the CSV bit
 
     # now the netCDF bit
-    netcdf_path = directory / "netcdf" / "postfix"
+    netcdf_path = directory / "netcdf" / f"{postfix}"
     for root, dirs, files in os.walk(netcdf_path):
         for file in files:
             if file.endswith(".nc"):
@@ -36,10 +36,30 @@ def rename_camels_files(postfix="zim"):
                 print(f"Renamed: {filepath} to {new_filepath}")
 
 
-test_name = "zim_1457800.0.nc"
+def rename_attributes_files(postfix="zim"):
+    directory = default_folder / f"output_{postfix}" / "attributes"
+    if not directory.is_dir():
+        raise ValueError(f"The provided folder for '{postfix}' is not a valid directory.")
 
-file = Path.home()
-file = file / "PycharmProjects/myCaravan/outputs/output_zim/timeseries/netcdf/zim/zim_1457800.0.nc"
-df = xr.read_csv(file)
-print(df)
+    caravan_attributes = directory / f"{postfix}" / f"attributes_caravan_{postfix}.csv"
+    hydroatlas_attributes = directory / f"{postfix}" / f"attributes_hydroatlas_{postfix}.csv"
+    other_attributes = directory / f"{postfix}" / f"attributes_other_{postfix}.csv"
 
+    list_attributes = [caravan_attributes, hydroatlas_attributes, other_attributes]
+
+    for csv in list_attributes:
+        df = pd.read_csv(csv)
+        for i, gauge in enumerate(df["gauge_id"]):
+            # print(gauge[:4] + gauge[4:])
+            new_gauge = gauge[:4] + str(int(float(gauge[4:])))
+            # print(new_gauge)
+            df.loc[i, "gauge_id"] = new_gauge
+
+        df.to_csv(csv, index=False)
+
+if __name__ == "__main__":
+
+
+    # rename_camels_files()
+
+    rename_attributes_files()
